@@ -7,7 +7,7 @@ import { BsCartFill } from 'react-icons/bs';
 
 const Header = () => {
     return (
-        <header className='fixed shadow-md w-full h-16 px-2 md:px-4 '>
+        <header className='fixed shadow-md w-full h-16 px-2 md:px-4 Z-50'>
 
             {/* desktop */}
             <div className='flex items-center h-full justify-between'>
