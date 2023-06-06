@@ -1,6 +1,6 @@
 import React from 'react'
 
-const login = () => {
+const Login = () => {
     return (
         <div>
             Login
