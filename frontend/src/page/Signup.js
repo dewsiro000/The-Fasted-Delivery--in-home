@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import loginSignupImage from '../assest/login-animation.gif'
 import { BiShow, BiHide } from 'react-icons/bi'
 import { Link, useNavigate } from "react-router-dom";
+import { ImagetoBase64 } from '../utility/ImagegetoBase64';
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -13,6 +14,7 @@ const Signup = () => {
         email: "",
         password: "",
         confirmPassword: "",
+        image: ""
     })
     console.log(data, "data");
     const handleShowPassword = () => {
@@ -31,8 +33,16 @@ const Signup = () => {
         })
     }
 
-    const handleUploadProfileImage = (e) => {
-        console.log(e.target.files[0]);
+    const handleUploadProfileImage = async (e) => {
+        const data = await ImagetoBase64(e.target.files[0])
+        console.log('data : ', data);
+
+        setData((preve) => {
+            return {
+                ...preve,
+                image: data
+            }
+        })
     }
 
     const handleSubmit = (e) => {
@@ -55,15 +65,15 @@ const Signup = () => {
     return (
         <div className='p-3 md:p-4'>
             <div className='w-full max-w-sm bg-white m-auto flex items-center flex-col p-4'>
-                <div className='w-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative cursor-pointer'>
-                    <img src={loginSignupImage} className='w-full' />
+                <div className='w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative '>
+                    <img src={data.image ? data.image : loginSignupImage} className='w-full h-full' />
 
-                    <lable htmlFor="profileImage">
-                        <div className=' absolute bottom-0 h-1/3 bg-slate-500 w-full text-center cursor-pointer'>
-                            <p className='text-sm p-1 text-white'>Upload</p>
+                    <label htmlFor="profileImage">
+                        <div className="absolute bottom-0 h-1/3  bg-slate-500 bg-opacity-50 w-full text-center cursor-pointer">
+                            <p className="text-sm p-1 text-white">Upload</p>
                         </div>
-                        <input type={"file"} id="profileImage" accept="image/*" className='hidden' onChange={handleUploadProfileImage} />
-                    </lable>
+                        <input type={"file"} id="profileImage" accept="image/*" className="hidden" onChange={handleUploadProfileImage} />
+                    </label>
 
                 </div>
 
