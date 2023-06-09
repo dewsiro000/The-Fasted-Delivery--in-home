@@ -46,10 +46,11 @@ const Signup = () => {
     }
     console.log(process.env.REACT_APP_SERVER_DOMIN)
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        const { firstName, email, password, confirmPassword } = data
+        e.preventDefault();
+        const { firstName, email, password, confirmPassword } = data;
         if (firstName && email && password && confirmPassword) {
             if (password === confirmPassword) {
+
                 const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/signup`, {
                     method: "POST",
                     headers: {
@@ -60,18 +61,21 @@ const Signup = () => {
 
                 const dataRes = await fetchData.json()
 
-                console.log(dataRes)
-                alert("successfull")
-                // navigate("/login")
+
+                alert(dataRes.message);
+                // toast(dataRes.message)
+                //   if(dataRes.alert){
+                //     navigate("/login");
+                //   }
+
+            } else {
+                alert("password and confirm password not equal");
             }
-            else {
-                alert("password and confirm password not equal")
-            }
+        } else {
+            alert("Please Enter required fields");
         }
-        else {
-            alert("Please Enter required fields")
-        }
-    }
+    };
+
 
     return (
         <div className='p-3 md:p-4'>
