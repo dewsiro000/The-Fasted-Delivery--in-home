@@ -46,32 +46,21 @@ app.post("/signup", async (req, res) => {
         console.log(result);
 
         if (result) {
-            res.send({ message: "Email id is already registered" });
+            res.send({ message: "Email id is already registered", alert: false });
         } else {
             const data = userModel(req.body);
             await data.save();
-            res.send({ message: "Successfully signed up" });
+            res.send({ message: "Successfully signed up", alert: true });
         }
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "An error occurred" });
     }
 });
-// app.post("/signup", async (req, res) => {
-//     console.log(req.body);
-//     const { email } = req.body;
 
-//     userModel.findOne({ email: email }, (err, result) => {
-//         console.log(result);
-//         console.log(err);
-//         if (result) {
-//             res.send({ message: "Email id is already register" });
-//         } else {
-//             const data = userModel(req.body);
-//             const save = data.save();
-//             res.send({ message: "Successfully sign up" });
-//         }
-//     });
-// });
+//api login
+app.post("/login", (req, res) => {
+    console.log(req.body);
+})
 
 app.listen(PORT, () => console.log("Sever is running at port : " + PORT))
