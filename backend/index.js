@@ -16,6 +16,9 @@ mongoose.connect(process.env.MONGODB_URL)
     .catch((err) => console.log(err))
 
 //schema
+
+// user section
+
 const userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
@@ -94,5 +97,12 @@ const schemaProduct = mongoose.Schema({
     description: String,
 });
 const productModel = mongoose.model("product", schemaProduct)
+
+app.post("/uploadProduct", async (req, res) => {
+    console.log(req.body);
+    const data = await productModel(req.body)
+    const datasave = await data.save()
+    res.send({ message: "Upload successfully" })
+})
 
 app.listen(PORT, () => console.log("Sever is running at port : " + PORT))

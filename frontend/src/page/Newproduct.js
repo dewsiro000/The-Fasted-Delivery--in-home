@@ -2,6 +2,7 @@ import React from 'react'
 import { BsCloudUpload } from 'react-icons/bs'
 import { ImagetoBase64 } from '../utility/ImagegetoBase64'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 const Newproduct = () => {
     const [data, setData] = useState({
@@ -36,26 +37,55 @@ const Newproduct = () => {
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(data);
+        const { name, image, category, price } = data;
+
+        if (name && image && category && price) {
+
+            const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/uploadProduct`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            const fetchRes = await fetchData.json()
+
+            console.log(fetchRes);
+            toast(fetchRes.message)
+
+            setData(() => {
+                return {
+                    name: "",
+                    category: "",
+                    image: "",
+                    price: "",
+                    description: ""
+                }
+            })
+        } else {
+            toast("Enter required Fields")
+        }
     }
 
     return (
         <div className='p-4'>
             <form className='m-auto w-full max-w-md shadow flex flex-col p-3 bg-white' onSubmit={handleSubmit}>
                 <label htmlFor='name'>Name</label>
-                <input type={"text"} name="name" className='bg-slate-200 p-1 my-1' onChange={handleOnChange} />
+                <input type={"text"} name="name" className='bg-slate-200 p-1 my-1' onChange={handleOnChange} value={data.name} />
 
                 <label htmlFor='category'>Category</label>
-                <select className='bg-slate-200 p-1 my-1' id='category' name='category' onChange={handleOnChange}>
-                    <option >select category</option>
-                    <option >Fruits</option>
-                    <option >Vegetable</option>
-                    <option>Icream</option>
-                    <option >Dosa</option>
-                    <option>Pizza</option>
-                    <option >rice</option>
+                <select className='bg-slate-200 p-1 my-1' id='category' name='category' onChange={handleOnChange} value={data.category}>
+                    <option value={"other"}>select category</option>
+                    <option value={"fruits"}>Fruits</option>
+                    <option value={"vegetable"}>Vegetable</option>
+                    <option value={"icream"}>Icream</option>
+                    <option value={"dosa"}>Dosa</option>
+                    <option value={"pizza"}>Pizza</option>
+                    <option value={"rice"}>rice</option>
                     <option >Cake</option>
                     <option >Burger</option>
                     <option >Panner</option>
