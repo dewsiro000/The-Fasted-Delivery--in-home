@@ -86,10 +86,10 @@ const Newproduct = () => {
                     <option value={"dosa"}>Dosa</option>
                     <option value={"pizza"}>Pizza</option>
                     <option value={"rice"}>rice</option>
-                    <option >Cake</option>
-                    <option >Burger</option>
-                    <option >Panner</option>
-                    <option >Sandwich</option>
+                    <option value={"cake"}>Cake</option>
+                    <option value={"burger"}>Burger</option>
+                    <option value={"panner"}>Panner</option>
+                    <option value={"sandwich"}>Sandwich</option>
                 </select>
 
                 <label htmlFor='image'>Image
@@ -102,10 +102,10 @@ const Newproduct = () => {
                 </label>
 
                 <label htmlFor='price' className='my-1'>Price</label>
-                <input type={"text"} className='bg-slate-200 p-1 my-1' name='price' onChange={handleOnChange} />
+                <input type={"text"} className='bg-slate-200 p-1 my-1' name='price' onChange={handleOnChange} value={data.price} />
 
                 <label htmlFor='description'>Description</label>
-                <textarea rows={2} className='bg-slate-200 p-1 my-1 resize-none' name='description' onChange={handleOnChange}></textarea>
+                <textarea rows={2} value={data.description} className='bg-slate-200 p-1 my-1 resize-none' name='description' onChange={handleOnChange}></textarea>
 
                 <button className='bg-red-500 hover:bg-red-600 text-white text-lg my-2 font-medium drop-shadow '>Save</button>
             </form>

@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast'
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false)
     const userData = useSelector((state) => state.user)
-    console.log('userData : ', userData);
+    console.log(userData.email);
     const dispatch = useDispatch()
 
     const handleShowMenu = () => {
@@ -20,6 +20,8 @@ const Header = () => {
         dispatch(logoutRedux())
         toast("Logout successfully")
     }
+
+    console.log(process.env.REACT_APP_ADMIN_EMAIL);
     return (
         <header className='fixed shadow-md w-full h-16 px-2 md:px-4 Z-50 bg-white'>
 
@@ -46,14 +48,18 @@ const Header = () => {
                             {userData.image ? <img src={userData.image} className='h-full w-full' /> : <HiOutlineUserCircle />}
                         </div>
                         {
-                            showMenu && <div className='absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col'>
-                                <Link to={"newproduct"} className='whitespace-nowrap cursor-pointer px-2'>New product</Link>
-                                {
-                                    userData.image ? <p className='cursor-pointer text-white px-2 bg-red-500' onClick={handleLogout}>Logout</p> :
-                                        <Link to={"login"} className='whitespace-nowrap cursor-pointer px-2' >Login </Link>
-                                }
-                            </div>
-                        }
+                            showMenu && (
+                                <div className='absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col'>
+                                    {
+                                        userData.email === process.env.REACT_APP_ADMIN_EMAIL &&
+                                        <Link to={"newproduct"} className='whitespace-nowrap cursor-pointer px-2'>New product</Link>
+                                    }
+                                    {
+                                        userData.image ? <p className='cursor-pointer text-white px-2 bg-red-500' onClick={handleLogout}>Logout</p> :
+                                            <Link to={"login"} className='whitespace-nowrap cursor-pointer px-2' >Login </Link>
+                                    }
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>
