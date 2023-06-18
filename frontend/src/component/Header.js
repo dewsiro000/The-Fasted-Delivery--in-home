@@ -50,12 +50,12 @@ const Header = () => {
                         {
                             showMenu && (
                                 <div className='absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col'>
-                                    {
+                                    {  //เฉพาะแอดมินที่เข้าถึงได้
                                         userData.email === process.env.REACT_APP_ADMIN_EMAIL &&
                                         <Link to={"newproduct"} className='whitespace-nowrap cursor-pointer px-2'>New product</Link>
                                     }
                                     {
-                                        userData.image ? <p className='cursor-pointer text-white px-2 bg-red-500' onClick={handleLogout}>Logout</p> :
+                                        userData.image ? <p className='cursor-pointer text-white px-2 bg-red-500' onClick={handleLogout}>Logout {(userData.firstName)}</p> :
                                             <Link to={"login"} className='whitespace-nowrap cursor-pointer px-2' >Login </Link>
                                     }
                                 </div>
