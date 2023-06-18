@@ -1,17 +1,22 @@
 import React from 'react'
 import HomeCard from '../component/HomeCard'
 import { useSelector } from 'react-redux'
+import CardFeatures from '../component/CardFeatures'
 
 const Home = () => {
     const productData = useSelector((state) => state.product.productList)
     console.log(productData);
-    const homeProductCartList = productData.slice(0, 4)
+    const homeProductCartList = productData.slice(1, 5);
+    const homeProductCartListVegetables = productData.filter(el => el.category === "vegetable", [])
+    console.log(homeProductCartListVegetables);
+
+    const loadingArray = new Array(4).fill(null)
     return (
         <div className='p-2 md:p-4'>
             <div className='md:flex gap-4 py-2'>
 
                 <div className='md:w-1/2'>
-                    <div className='flex gap-3 bg-red-400 w-36 px-2 items-center rounded-full'>
+                    <div className='flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full'>
                         <p className='text-sm font-medium text-slate-900 '>Bike Delivery</p>
                         <img src="https://vectoricons.net/images/products/iconsets/bike@700x575.png" className='h-7' />
                     </div>
@@ -20,16 +25,43 @@ const Home = () => {
                     <button className='font-bold bg-red-500 text-slate-200 px-4 py-2 rounded-md'>Order Now</button>
                 </div>
 
-                <div className='md:w-1/2'>
-                    {
+                <div className='md:w-1/2 flex flex-wrap gap-5 p-20 justify-center'>
+                    {homeProductCartList[0] ?
                         homeProductCartList.map(el => {
+                            return (
+                                <HomeCard
+                                    image={el.image}
+                                    name={el.name}
+                                    price={el.price}
+                                    category={el.category}
+                                />
+                            )
+                        })
+                        :
+                        loadingArray.map(el => {
                             return (
                                 <HomeCard />
                             )
                         })
                     }
                 </div>
+            </div>
 
+            <div>
+                <h2 className='font-bold text-2xl text-slate-800'>Fresh Vegetable</h2>
+                <div>
+                    {
+                        homeProductCartListVegetables.map(el => {
+                            <CardFeatures
+                                key={el._id}
+                                name={el.name}
+                                category={el.category}
+                                price={el.price}
+                                image={el.image}
+                            />
+                        })
+                    }
+                </div>
             </div>
         </div>
     )
