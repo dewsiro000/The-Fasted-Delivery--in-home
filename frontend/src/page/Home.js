@@ -5,10 +5,8 @@ import CardFeatures from '../component/CardFeatures'
 
 const Home = () => {
     const productData = useSelector((state) => state.product.productList)
-    console.log(productData);
     const homeProductCartList = productData.slice(1, 5);
     const homeProductCartListVegetables = productData.filter(el => el.category === "vegetable", [])
-    console.log(homeProductCartListVegetables);
 
     const loadingArray = new Array(4).fill(null)
     return (
@@ -38,9 +36,12 @@ const Home = () => {
                             )
                         })
                         :
-                        loadingArray.map(el => {
+                        loadingArray.map((el, index) => {
                             return (
-                                <HomeCard />
+                                <HomeCard
+                                    key={index}
+                                    loading={"Loading..."}
+                                />
                             )
                         })
                     }
